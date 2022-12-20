@@ -1,0 +1,69 @@
+.user-side-info {
+  color: rgba(255,255,255,.8);
+}
+
+.language-selected {
+  color: black !important;
+  font-weight: bold;
+}
+
+.menu-version{
+  font-size: x-small;
+}
+
+
+/* Data tables */
+.dataTables_length, .dataTables_info {
+  float: left;
+}
+
+.dt-buttons {
+  float: none !important;
+  text-align: right !important;
+}
+
+.dt-buttons button {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  color: #006fe6;
+  background: #fff;
+  border: 1px solid #dee2e6;
+}
+
+.dt-buttons button:hover {
+  background: #e9ecef !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+.mergedCell {
+  text-align: center !important;
+  font-size:small !important;
+}
+
+.card-role {
+  text-align: center;
+  font-size: 1.5em;
+  padding-top: 20px;
+}
+
+.main-footer {
+  color: #68737d;
+}
+
+.content-wrapper {
+  background: #f9f9f9;
+}
+
+.sr-only{
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.breadcrumb-item.active {
+  color: #5f666d;
+}

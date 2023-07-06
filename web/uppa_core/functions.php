@@ -1389,7 +1389,7 @@ function executeCURL($url){
 
 
 function getScimagoQforPublication($mysqli, $issn, $year){
-	if ( ( intval($year) < 1999 ) || ( intval($year) > 2020 ) ) return null;
+	if ( ( intval($year) < 1999 ) || ( intval($year) > 2022 ) ) return null;
 
 	$q = null;
 	$scimago_table = "scimagojr".$year;

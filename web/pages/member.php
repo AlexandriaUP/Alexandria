@@ -241,7 +241,7 @@ if ( !isset($_SESSION["role"]) || $_SESSION["role"] == "guest" ){ header("Locati
 		  <div class="col-md-12">
             <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title"><?php echo _MEMBER_IN_REPORT_CARD_SCHOLAR_HEADER; ?></h3>
+                <h3 class="card-title"><?php echo _MEMBER_IN_REPORT_CARD_SCOPUS_HEADER; ?></h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>

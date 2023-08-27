@@ -44,7 +44,7 @@ if (!defined('_MENU_CODE')) define("_MENU_CODE", "ΚΩΔΙΚΑΣ");
 if (!defined('_MENU_TUTORIAL')) define("_MENU_TUTORIAL", "Οδηγός χρήσης");
 if (!defined('_MENU_SOURCE_CODE')) define("_MENU_SOURCE_CODE", "Πηγαίος κώδικας");
 
-if (!defined('_FOOTER_COPYRIGHT')) define("_FOOTER_COPYRIGHT", "Copyright &copy; 2021 Πανεπιστήμιο Πατρών");
+if (!defined('_FOOTER_COPYRIGHT')) define("_FOOTER_COPYRIGHT", "Copyright &copy; 2023 Πανεπιστήμιο Πατρών");
 if (!defined('_FOOTER_EMAIL')) define("_FOOTER_EMAIL", "modipsecr@upatras.gr");
 if (!defined('_FOOTER_VERSION')) define("_FOOTER_VERSION", "Έκδοση");
 

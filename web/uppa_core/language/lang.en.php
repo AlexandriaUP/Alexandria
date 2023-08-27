@@ -43,7 +43,7 @@ define("_MENU_CODE", "SOURCE CODE");
 define("_MENU_TUTORIAL", "Tutorial");
 if (!defined('_MENU_SOURCE_CODE')) define("_MENU_SOURCE_CODE", "Source code");
 
-define("_FOOTER_COPYRIGHT", "Copyright &copy; 2021 University of Patras");
+define("_FOOTER_COPYRIGHT", "Copyright &copy; 2023 University of Patras");
 define("_FOOTER_EMAIL", "modipsecr@upatras.gr");
 define("_FOOTER_VERSION", "Version");
 

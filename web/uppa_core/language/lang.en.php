@@ -167,4 +167,6 @@ define ("_TUTORIAL_HEADER", "Tutorial");
 define ("_ERROR_HEADER", "Error");
 define ("_ERROR_CODE_GENERIC", "There was a problem.");
 define ("_ERROR_CODE_ACCESS_DENIED", "You have no access rights for this request.");
+
+define("_SOURCE_CODE_TEXT", "Alexandria's source code is available in ");
 ?>

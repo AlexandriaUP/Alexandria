@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once("components/language.php");
-require_once("../uppa_core/settings/source_code_file.php");
 require_once("../uppa_core/settings/components.php");
 ?>
 <!DOCTYPE html>
@@ -54,8 +53,7 @@ require_once("../uppa_core/settings/components.php");
                <div class="container-fluid">
                   <div class="row">
                      <div class="col-md-12">
-                        <p>Κατεβάστε τον πηγαίο κώδικα της Αλεξάνδρειας από <a href='<?php echo _SOURCE_CODE_FILEPATH; ?>'>εδώ</a>.
-                          Οι οδηγίες εγκατάστασης βρίσκονται μέσα στο zip αρχείο.</p>
+                        <p><?php echo _SOURCE_CODE_TEXT; ?><a href='https://github.com/AlexandriaUP/Alexandria'>Github</a>.</p>
                         <!-- /.card -->
                      </div>
                   </div>

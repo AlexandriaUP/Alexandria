@@ -172,4 +172,6 @@ define ("_ERROR_HEADER", "Σφάλμα");
 define ("_ERROR_CODE_GENERIC", "Παρουσιάστηκε σφάλμα.");
 define ("_ERROR_CODE_ACCESS_DENIED", "Δεν έχετε δικαίωμα πρόβασης.");
 
+define("_SOURCE_CODE_TEXT", "Ο κώδικας του λογισμικού Αλεξάνδρεια είναι διαθέσιμος στο ");
+
 ?>

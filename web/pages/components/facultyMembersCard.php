@@ -2,10 +2,11 @@
 function viewFacultyMembersCard($facultyMembers){
   $card = "";
   if (sizeof($facultyMembers) > 0){
-    $fmsWithScholar = $fmsWithScopus = $fmsWithValidatedProfile = sizeof($facultyMembers);
+    $fmsWithScholar = $fmsWithScopus = $fmsWithValidatedProfile = $fmsWithOrcid = sizeof($facultyMembers);
     foreach ($facultyMembers as $fm){
       if ($fm->scholar_id == "" || $fm->scholar_id == NULL) $fmsWithScholar--;
       if ($fm->scopus_id == "" || $fm->scopus_id == NULL) $fmsWithScopus--;
+      if ($fm->orcid_id == "" || $fm->orcid_id == NULL) $fmsWithOrcid--;
       if ($fm->isValidated == 0) $fmsWithValidatedProfile--;
     }
 
@@ -18,6 +19,7 @@ function viewFacultyMembersCard($facultyMembers){
     $card .= "<p class='text-center'><strong>"._LABEL_MEMBERS_TOTAL_STATS."</strong></p>";
     $card .= "<div class='progress-group'><span class='progress-text'>"._LABEL_MEMBERS_COUNT_SCHOLAR_PROFILES."</span><span class='float-right'><b>".$fmsWithScholar."</b>/".sizeof($facultyMembers)."</span><div class='progress progress-sm'><div class='progress-bar bg-blue' style='width: ".$fmsWithScholar*100/sizeof($facultyMembers)."%'></div></div></div>";
     $card .= "<div class='progress-group'><span class='progress-text'>"._LABEL_MEMBERS_COUNT_SCOPUS_PROFILES."</span><span class='float-right'><b>".$fmsWithScopus."</b>/".sizeof($facultyMembers)."</span><div class='progress progress-sm'><div class='progress-bar bg-orange' style='width: ".$fmsWithScopus*100/sizeof($facultyMembers)."%'></div></div></div>";
+    $card .= "<div class='progress-group'><span class='progress-text'>"._LABEL_MEMBERS_COUNT_ORCID_PROFILES."</span><span class='float-right'><b>".$fmsWithOrcid."</b>/".sizeof($facultyMembers)."</span><div class='progress progress-sm'><div class='progress-bar bg-orange' style='width: ".$fmsWithOrcid*100/sizeof($facultyMembers)."%'></div></div></div>";
     $card .= "<div class='progress-group'><span class='progress-text'>"._LABEL_MEMBERS_COUNT_VALIDATED_PROFILES."</span><span class='float-right'><b>".$fmsWithValidatedProfile."</b>/".sizeof($facultyMembers)."</span><div class='progress progress-sm'><div class='progress-bar bg-grey' style='width: ".$fmsWithValidatedProfile*100/sizeof($facultyMembers)."%'></div></div></div>";
     $card .= "</div></div></div>";
     /* Table */
@@ -28,6 +30,7 @@ function viewFacultyMembersCard($facultyMembers){
     $card .= "<th scope='col'>"._LABEL_SCHOOL."</th>";
     $card .= "<th scope='col'>"._LABEL_SCHOLAR_ID."</th>";
     $card .= "<th scope='col'>"._LABEL_SCOPUS_ID."</th>";
+    $card .= "<th scope='col'>"._LABEL_ORCID_ID."</th>";
     $card .= "<th scope='col'>"._LABEL_VALIDATED_PROFILE."</th>";
     $card .= "<th scope='col'>"._LABEL_ACTION."</th>";
     $card .= "</tr></thead><tbody>";
@@ -40,6 +43,11 @@ function viewFacultyMembersCard($facultyMembers){
       $card .= "<td>".$fm->department->school->name."</td>";
       $card .= "<td>".$fm->scholar_id."</td>";
       $card .= "<td>".$fm->scopus_id."</td>";
+      if (!empty($fm->orcid_id)) {
+        $card .= "<td><a href='".$fm->orcid_id."'>$fm->orcid_id</a></td>";
+      } else {
+        $card .= "<td></td>";
+      }
       $card .= "<td class='td-validated'>".$isValidated."</td>";
       $card .= "<td><a href='editMember.php?fmid=".$fm->id."'>"._LABEL_EDIT."</a></td>";
       $card .= "</tr>";

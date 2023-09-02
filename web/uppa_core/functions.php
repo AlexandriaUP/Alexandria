@@ -47,8 +47,6 @@ function getReports($mysqli){
 	return $reports;
 }
 
-
-
 /**
 	Gets a specific report
 	@param: mysqli ($mysqli) - The connection with the Alexandria database
@@ -114,8 +112,6 @@ function createNewReport($mysqli, $report_title){
 	return $report;
 }
 
-
-
 /**
 	Get all faculty members
 	@param: mysqli ($mysqli) - The connection with the Alexandria database
@@ -135,6 +131,7 @@ function getFacultyMembers($mysqli){
 				$row["last_name"],
 				$row["google_scholar_id"],
 				$row["scopus_id"],
+				$row["orcid_id"],
 				new Department($row["department"], $row["dpt_full_name"], new School($row["dpt_school_id"], $row["school_name"])),
 				new Rank($row["rank_id"], $row["rank_full_title"], $row["rank_short_title"], $row["rank_order_id"]),
 				new Role($row["role_id"], $row["role_name"], $row["role_order_id"]),
@@ -162,6 +159,7 @@ function getFacultyMemberById($mysqli, $fmid){
 				$row["last_name"],
 				$row["google_scholar_id"],
 				$row["scopus_id"],
+				$row["orcid_id"],
 				new Department($row["department"], $row["dpt_full_name"], new School($row["dpt_school_id"], $row["school_name"])),
 				new Rank($row["rank_id"], $row["rank_full_title"], $row["rank_short_title"], $row["rank_order_id"]),
 				new Role($row["role_id"], $row["role_name"], $row["role_order_id"]),
@@ -188,12 +186,18 @@ function getFacultyMemberInReport($mysqli, $member_id, $report_id, $provider_id)
 	if ($result = $mysqli -> query($sql)) {
 		while ($row = $result -> fetch_assoc()) {
 			$jsonInfoMetadata = json_decode($row["info_metadata"]);
+			if (!isset($jsonInfoMetadata->orcid_id)) {
+				$orcid_id = null;
+			} else {
+				$orcid_id = $jsonInfoMetadata->orcid_id;
+			}
 			$facultyMember = new FacultyMember(
 				$jsonInfoMetadata->id,
 				$jsonInfoMetadata->first_name,
 				$jsonInfoMetadata->last_name,
 				$jsonInfoMetadata->scholar_id,
 				$jsonInfoMetadata->scopus_id,
+				$orcid_id,
 				new Department($jsonInfoMetadata->department->id,
 											 $jsonInfoMetadata->department->name,
 											 new School($jsonInfoMetadata->department->school->id,
@@ -247,12 +251,18 @@ function getFacultyMembersInReport($mysqli, $report_id, $role_id, $provider_id){
 		while ($row = $result -> fetch_assoc()) {
 			/* Create the Faculty Member */
 			$jsonInfoMetadata = json_decode($row["info_metadata"]);
+			if (!isset($jsonInfoMetadata->orcid_id)) {
+				$orcid_id = null;
+			} else {
+				$orcid_id = $jsonInfoMetadata->orcid_id;
+			}
 			$facultyMember = new FacultyMember(
 				$jsonInfoMetadata->id,
 				$jsonInfoMetadata->first_name,
 				$jsonInfoMetadata->last_name,
 				$jsonInfoMetadata->scholar_id,
 				$jsonInfoMetadata->scopus_id,
+				$orcid_id,
 				new Department($jsonInfoMetadata->department->id,
 											 $jsonInfoMetadata->department->name,
 											 new School($jsonInfoMetadata->department->school->id,
@@ -315,7 +325,6 @@ function getFacultyMembersInReport($mysqli, $report_id, $role_id, $provider_id){
 	return $facultyMembers;
 }
 
-
 function getScimagoQForFacultyMemberInReport($mysqli, $report_id, $fm_id){
 	$qs = array(0, 0, 0, 0, 0);
 
@@ -360,7 +369,7 @@ function getScimagoQForFacultyMemberInReport($mysqli, $report_id, $fm_id){
 **/
 function getReportStatusOfFacultyMembers($mysqli, $report_id){
 		// sql query
-		$sql = "SELECT DISTINCT fmir.facultymember_id AS id, fm.last_name, fm.first_name, fm.google_scholar_id, fm.scopus_id, fm.phd_year,
+		$sql = "SELECT DISTINCT fmir.facultymember_id AS id, fm.last_name, fm.first_name, fm.google_scholar_id, fm.scopus_id, fm.orcid_id, fm.phd_year,
 		(SELECT metrics_metadata FROM faculty_member_in_report AS fmirScholar WHERE fmir.facultymember_id = fmirScholar.facultymember_id AND provider_id='gscholar' AND report_id='$report_id') As `scholar_metadata`,
 		(SELECT metrics_metadata FROM faculty_member_in_report AS fmirScopus WHERE fmir.facultymember_id = fmirScopus.facultymember_id AND provider_id='scopus' AND report_id='$report_id') As `scopus_metadata`
 		FROM faculty_member_in_report AS fmir, faculty_member as fm
@@ -375,6 +384,7 @@ function getReportStatusOfFacultyMembers($mysqli, $report_id){
 				$row["last_name"],
 				$row["google_scholar_id"],
 				$row["scopus_id"],
+				$row["orcid_id"],
 				NULL,
 				NULL,
 				NULL,
@@ -466,8 +476,6 @@ function getDepartments($mysqli, $reference_time = null){
 	return $departments;
 }
 
-
-
 /**
   * Redirect with POST data.
   *
@@ -503,25 +511,6 @@ function redirect_post($url, array $data, array $headers = null) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class MetricsList {
 	public $publications, $publications_5y, $citations, $citations_5y, $hindex, $hindex_5y, $i10index, $i10index_5y, $mindex, $publications_current_year, $citations_current_year, $most_paper_citations;
 	function __construct($publications, $publications_5y, $citations, $citations_5y, $hindex, $hindex_5y, $i10index, $i10index_5y, $mindex, $publications_current_year, $citations_current_year, $most_paper_citations) {
@@ -539,8 +528,6 @@ class MetricsList {
 		$this->most_paper_citations = $most_paper_citations;
 	}
 }
-
-
 
 class DepartmentProgress { public $department_id, $department_full_name, $total_faculty_members, $faculty_members_with_metrics; }
 class AggregateMetrics {
@@ -561,15 +548,7 @@ class AggregateMetrics {
 	public $citations_3_years_before = array();
 	public $pubs_q12 = array();
 	public $pubs_q1234 = array();
-	}
-
-
-
-
-
-
-
-
+}
 
 /**
 	Creates a connection with the Alexandria database;
@@ -603,13 +582,6 @@ function connectToAlexandriaScimagoDatabase(){
 	}
 	return $mysqli;
 }
-
-
-
-
-
-
-
 
 function getFacultyMembersWithMetrics($mysqli, $report_id, $unit_type, $unit_id, $provider){
 	$facultyMembersWithMetrics = array();
@@ -654,9 +626,6 @@ function getFacultyMembersWithMetrics($mysqli, $report_id, $unit_type, $unit_id,
 	return $facultyMembersWithMetrics;
 }
 
-
-
-
 function getMetricsForFacultyMembers($mysqli, $report_id, $unit_type, $unit_id, $provider){
 	$facultyMembersWithMetrics = array();
 	if ($unit_type == "university"){
@@ -698,9 +667,6 @@ function getMetricsForFacultyMembers($mysqli, $report_id, $unit_type, $unit_id, 
 	return $facultyMembersWithMetrics;
 }
 
-
-
-
 function getDepartment($mysqli, $department_id, $reference_time){
 	$sql = "SELECT * FROM `department`, `department_info`, `school` WHERE `department`.`dpt_school_id` = `school`.`school_id` AND `department`.`dpt_id`='$department_id' AND `department`.`dpt_id` = `department_info`.`dptid` 
 	AND ( (`department_info`.`valid_from` <= STR_TO_DATE('".$reference_time."', '%Y-%m-%d %H:%i:%s') AND `department_info`.`valid_until` IS NULL) OR (`department_info`.`valid_from` <= STR_TO_DATE('".$reference_time."', '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE('".$reference_time."', '%Y-%m-%d %H:%i:%s') <= `department_info`.`valid_until`) )";
@@ -714,7 +680,6 @@ function getDepartment($mysqli, $department_id, $reference_time){
 	}
 	return $department;
 }
-
 
 function getSchools($mysqli){
 	$schools = array();
@@ -740,9 +705,6 @@ function getSchool($mysqli, $school_id){
 	}
 	return $school;
 }
-
-
-
 
 function getAggregateMetricsFromAllFacultyMembers($facultyMembersWithMetrics, $unit_type, $units, $report_year){
 	$metricsArray = array();
@@ -902,9 +864,6 @@ function getAggregateMetricsFromAllFacultyMembers($facultyMembersWithMetrics, $u
 	return $metricsArray;
 
 }
-
-
-
 
 function getAggregateMetricsFromAllFacultyMembers_NEW_NEED_WORK($facultyMembersWithMetrics, $unit_type, $units, $report_year){
 	if ($unit_type == "university"){
@@ -1075,22 +1034,6 @@ function getAggregateMetricsFromAllFacultyMembers_NEW_NEED_WORK($facultyMembersW
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function getPublicationsOfFacultyMember($mysqli, $member_id, $report_id, $provider_id){
 
 	$sql = "SELECT * FROM `publication_of_faculty_member_in_report` WHERE `facultymember_id`='$member_id' AND `report_id`='$report_id' AND `provider_id`='$provider_id'";
@@ -1126,7 +1069,6 @@ function getPublicationsOfFacultyMember($mysqli, $member_id, $report_id, $provid
 	return $publications;
 }
 
-
 function getFacultyMembersWithNoMetricsForGivenReport($mysqli, $report_id){
 	$facultyMembers = array();
 	//if ( ($department == "all") && ($rank == "all") ){
@@ -1148,10 +1090,6 @@ function getFacultyMembersWithNoMetricsForGivenReport($mysqli, $report_id){
 		return $facultyMembers;
 	//}
 }
-
-
-
-
 
 function getMetricsForEachDepartment($mysqli, $report_id, $provider){
 	$metricsForEachDeparment = array();
@@ -1176,18 +1114,9 @@ function getMetricsForEachDepartment($mysqli, $report_id, $provider){
 	return $metricsForEachDeparment;
 }
 
-
-
-
 function getStatusForEachDepartmentReport($mysqli, $provider){
 	$arrStatus = array();
 }
-
-
-
-
-
-
 
 function getActiveMetrics($mysqli, $report_id, $provider){
 	$progressForEachDepartment = array();
@@ -1278,7 +1207,6 @@ function getTop210ProfilesCitations($mysqli, $report_id, $provider){
 	return $total_citations;
 }
 
-
 function getMeanScore($arr){
 	if (empty($arr)) return 0;
 	$totalScore = 0;
@@ -1335,10 +1263,6 @@ function getTotal($arr){
 	return $totalScore;
 }
 
-
-
-
-
 function extractMembersOfSchool($facultyMembers, $school_id){
 	foreach ($facultyMembers as $fmKey => $fm){
 		if ( json_decode($fm->info_metadata)->department->school->id != $school_id){
@@ -1368,8 +1292,6 @@ function getElementFromKey($givenArray, $givenKey){
 	return $elementValue;
 }
 
-
-
 function executeCURL($url){
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_URL, $url);
@@ -1383,17 +1305,19 @@ function executeCURL($url){
 	return $resp;
 }
 
-
-
-
-
-
-function getScimagoQforPublication($mysqli, $issn, $year){
+function getScimagoQforPublication($mysqli, $issn, $year, $eissn){
 	if ( ( intval($year) < 1999 ) || ( intval($year) > 2022 ) ) return null;
 
 	$q = null;
 	$scimago_table = "scimagojr".$year;
-	$sql = "SELECT `sjr_best_q` FROM `$scimago_table` WHERE `issn` LIKE '%$issn%'";
+	if(!empty($issn) && !empty($eissn)) {
+		$sql = "SELECT `sjr_best_q` FROM `$scimago_table` WHERE `issn` LIKE '%$issn%' OR `issn` LIKE '%$eissn%'";
+	} elseif (!empty($issn)) {
+		$sql = "SELECT `sjr_best_q` FROM `$scimago_table` WHERE `issn` LIKE '%$issn%'";
+	} else {
+		$sql = "SELECT `sjr_best_q` FROM `$scimago_table` WHERE `issn` LIKE '%$eissn%'";
+	}
+	
 	if ($result = $mysqli -> query($sql)) {
 		while ($row = $result -> fetch_assoc()) {
 			$q = $row["sjr_best_q"];
@@ -1404,7 +1328,49 @@ function getScimagoQforPublication($mysqli, $issn, $year){
 
 }
 
+function validate_orcid($orcidid) {
+    if (strlen($orcidid) != 37) {
+        return false;
+    }
+    if (!str_starts_with($orcidid,'https://orcid.org/')) {
+        return false;
+    }
+    if (substr($orcidid,22,1) != '-' || substr($orcidid,27,1) != '-' || substr($orcidid,32,1) != '-') {
+        return false;
+    }
+    if (!is_numeric(substr($orcidid,18,4)) || !is_numeric(substr($orcidid,23,4)) || !is_numeric(substr($orcidid,28,4)) || !is_numeric(substr($orcidid,33,3))) {
+        return false;
+    }
 
+    $baseDigits = substr($orcidid,18,4).substr($orcidid,23,4).substr($orcidid,28,4).substr($orcidid,33,3);
+    $total = 0;
+    foreach (str_split($baseDigits) as $char) {
+        $total = ($total + (int) $char) * 2;
+    }
+    $remainder = $total % 11;
+    $result = (12 - $remainder) % 11;
+    if ($result != 10 && (string) $result != substr($orcidid,36,1)) {
+        return false;
+    } elseif ($result == 10 && substr($orcidid,36,1) != 'X') { 
+        return false;
+    }
+    return true;
+}
+
+function curPageURL() {
+	$pageURL = 'http';
+	if(isset($_SERVER["HTTPS"]))
+	if ($_SERVER["HTTPS"] == "on") {
+		$pageURL .= "s";
+	}
+	$pageURL .= "://";
+	if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
+		$pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+	} else {
+		$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+	}
+	return $pageURL;
+}
 
 class ModipMetric {
 	public $unit, $code, $title, $count;
@@ -1415,6 +1381,7 @@ class ModipMetric {
 		$this->count = $count;
 	}
 }
+
 function getModipDataForUpatras($mysqli, $report_id, $year){
 	$pubs_in_scopus_journals = 0;
 	$pubs_in_scopus_journas_year = 0;

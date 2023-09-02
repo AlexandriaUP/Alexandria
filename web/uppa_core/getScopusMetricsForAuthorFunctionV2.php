@@ -1,9 +1,16 @@
 <?php
+session_start();
 require_once 'functions.php';
 require_once 'classes/AuthorProfile.php';
 require_once 'classes/Publication.php';
 require_once 'classes/Message.php';
 require_once 'settings/year.php';
+
+if ( !isset($_SESSION["role"]) || $_SESSION["role"] != "admin" ){
+	$msg = new Message("error", "Admin role not found");
+	echo json_encode($msg);
+	exit;
+}
 
 set_time_limit(1000);
 
@@ -46,7 +53,7 @@ if ( isset($resp['author-retrieval-response']) ){
 	$hindex = $resp['author-retrieval-response'][0]['h-index'];
 	$publications_total = $resp['author-retrieval-response'][0]['coredata']['document-count'];
 	$citations_total = $resp['author-retrieval-response'][0]['coredata']['citation-count'];
-	if ( $phd_year != 0 ) $mindex = round( $hindex / ($current_year - $phd_year), 3 );
+	if ((bool) $phd_year && is_int($phd_year)) $mindex = round( $hindex / ($current_year - $phd_year), 3 );
 } else {
 	$msg->type = "error";
 	$msg->content = "Προέκυψε κάποιο πρόβλημα με τη συλλογή των βασικών δεδομένων";
@@ -97,8 +104,8 @@ for ($i=0; $i<= $reps; $i++){
 			if (isset($p["dc:identifier"])) $publication->pub_provider_id = $p["dc:identifier"]; else $publication->pub_provider_id = "";
 			if (isset($p["prism:coverDate"]))	$publication->year = substr($publication->pub_date, 0, 4);
 
-			if ( isset($p["prism:issn"]) && isset($p["prism:coverDate"]) && $publication->pub_type == "Journal" )
-					$publication->q = getScimagoQforPublication($scimago_mysqli, $publication->pub_issn, $publication->year);
+			if ( (isset($p["prism:issn"]) || isset($p["prism:eIssn"])) && isset($p["prism:coverDate"]) && $publication->pub_type == "Journal" )
+					$publication->q = getScimagoQforPublication($scimago_mysqli, $publication->pub_issn, $publication->year, $publication->pub_eissn);
 			else $publication->q = null;
 			array_push($publications, $publication);
 		}
@@ -221,7 +228,6 @@ $jsonAuthorData = array(
 
 $metrics_metadata = json_encode($jsonAuthorData);
 //print_r( $metrics_metadata );
-
 
 /* Step 6: Update database */
 $mysqli = createDatabaseConnection();

@@ -18,6 +18,10 @@ define("_SCOPUS_API_KEY_CITATIONS", "");
 define("_SCOPUS_API_KEY_SCIVAL", "");
 define("_COUNT_MAX", "200");
 
+/* ORCID api client id */
+define("_ORCID_API_CLIENT_ID", "");
+define("_ORCID_API_ENV", ""); //production or sandbox
+
 /* SAML SSO settings */
 $emailExt = ""; //e.g. @upatras.gr
 $spBaseUrl = ''; // e.g., 'https://alexandria.upatras.gr/uppa_core/saml/';

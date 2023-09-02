@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /* Required files */
 require_once 'scraping_plugin/simple_html_dom/simple_html_dom.php';
 require_once "settings/year.php";
@@ -8,6 +8,11 @@ require_once "classes/Publication.php";
 require_once "classes/Message.php";
 require_once 'functions.php';
 
+if ( !isset($_SESSION["role"]) || $_SESSION["role"] != "admin" ){
+	$msg = new Message("error", "Admin role not found");
+	echo json_encode($msg);
+	exit;
+}
 
 /* Set some time constraints to avoid bot check from Google */
 set_time_limit(0);

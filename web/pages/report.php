@@ -8,10 +8,9 @@ require_once("../uppa_core/settings/year.php");
 
 set_time_limit(240);
 
-
-
 	/* Parameters */
 	$report_id = $_GET["rid"];
+	if (empty($report_id) || !is_numeric($report_id)) { header("Location: error.php?ec=gnr"); exit; }
 	$type = "university_report";
 	if (isset($_GET['sid'])) $type = "school_report";
 	if (isset($_GET['did'])) $type = "department_report";

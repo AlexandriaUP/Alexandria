@@ -94,6 +94,7 @@ define ("_LABEL_DEPARTMENT", "Department");
 define ("_LABEL_SCHOOL", "School");
 define ("_LABEL_SCHOLAR_ID", "Scholar ID");
 define ("_LABEL_SCOPUS_ID", "Scopus ID");
+define ("_LABEL_ORCID_ID", "ORCID ID");
 define ("_LABEL_VALIDATED_PROFILE", "Profile is validated");
 define ("_LABEL_ACTION", "Action");
 define ("_LABEL_EDIT", "Edit");
@@ -106,6 +107,7 @@ define ("_LABEL_YEAR", "Year");
 define ("_LABEL_CITATIONS", "Citations");
 define ("_LABEL_SCHOLAR", "Scholar");
 define ("_LABEL_SCOPUS", "Scopus");
+define ("_LABEL_ORCID", "ORCID");
 define ("_LABEL_METRIC", "Metric");
 define ("_LABEL_HINDEX", "h index");
 define ("_LABEL_I10INDEX", "i10 index");
@@ -125,6 +127,7 @@ if (!defined('_LABEL_NUMBER_OF_PUBLICATIONS')) define("_LABEL_NUMBER_OF_PUBLICAT
 define ("_LABEL_MEMBERS_TOTAL_STATS", "Total stats");
 define ("_LABEL_MEMBERS_COUNT_SCHOLAR_PROFILES", "Members with Google Scholar profile");
 define ("_LABEL_MEMBERS_COUNT_SCOPUS_PROFILES", "Members with Scopus profile");
+define ("_LABEL_MEMBERS_COUNT_ORCID_PROFILES", "Members with ORCID profile");
 define ("_LABEL_MEMBERS_COUNT_VALIDATED_PROFILES", "Members with validated data");
 
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_LASTNAME", "Please type the member's last name");
@@ -132,8 +135,10 @@ define ("_EDIT_MEMBER_FORM_PLACEHOLDER_FIRSTNAME", "Please type the member's fir
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_PHD", "Please type the year when the member obtained their PhD");
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_SCHOLAR", "Please type the member's Scholar ID (e.g., h-2JebwAAAAJ)");
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_SCOPUS", "Please type the member's Scopus ID (e.g., 7201792626)");
+define ("_EDIT_MEMBER_FORM_PLACEHOLDER_ORCID", "Please type the member's ORCID ID (e.g., 0000-0002-1825-0097)");
 define ("_EDIT_MEMBER_FORM_CHECK_SCHOLAR_PROFILE", "Check the member's Scholar profile by clicking");
 define ("_EDIT_MEMBER_FORM_CHECK_SCOPUS_PROFILE", "Check the member's Scopus profile by clicking");
+define ("_EDIT_MEMBER_FORM_CHECK_ORCID_PROFILE", "Check the member's ORCID profile by clicking");
 define ("_EDIT_MEMBER_FORM_LABEL_VALID_DATA", "Are the data correct?");
 define ("_EDIT_MEMBER_FORM_LABEL_VALID_DATA_YES", "YES");
 define ("_EDIT_MEMBER_FORM_LABEL_VALID_DATA_NO", "NO / NOT CHECKED YET");

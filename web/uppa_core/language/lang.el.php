@@ -96,6 +96,7 @@ define ("_LABEL_DEPARTMENT", "Τμήμα");
 define ("_LABEL_SCHOOL", "Σχολή");
 define ("_LABEL_SCHOLAR_ID", "Scholar ID");
 define ("_LABEL_SCOPUS_ID", "Scopus ID");
+define ("_LABEL_ORCID_ID", "ORCID ID");
 define ("_LABEL_VALIDATED_PROFILE", "Ενημερωμένο προφίλ");
 define ("_LABEL_ACTION", "Ενέργεια");
 define ("_LABEL_EDIT", "Επεξεργασία");
@@ -108,6 +109,7 @@ define ("_LABEL_YEAR", "Έτος");
 define ("_LABEL_CITATIONS", "Αναφορές");
 define ("_LABEL_SCHOLAR", "Scholar");
 define ("_LABEL_SCOPUS", "Scopus");
+define ("_LABEL_ORCID", "ORCID");
 define ("_LABEL_METRIC", "Μετρική");
 define ("_LABEL_HINDEX", "h index");
 define ("_LABEL_I10INDEX", "i10 index");
@@ -127,6 +129,7 @@ if (!defined('_LABEL_NUMBER_OF_PUBLICATIONS')) define("_LABEL_NUMBER_OF_PUBLICAT
 define ("_LABEL_MEMBERS_TOTAL_STATS", "Συγκεντρωτικά στοιχεία");
 define ("_LABEL_MEMBERS_COUNT_SCHOLAR_PROFILES", "Έχουν προφίλ στο Google Scholar");
 define ("_LABEL_MEMBERS_COUNT_SCOPUS_PROFILES", "Έχουν προφίλ στο Scopus");
+define ("_LABEL_MEMBERS_COUNT_ORCID_PROFILES", "Έχουν προφίλ στο ORCID");
 define ("_LABEL_MEMBERS_COUNT_VALIDATED_PROFILES", "Εχουν επικυρωμένα στοιχεία");
 
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_LASTNAME", "Παρακαλώ εισάγετε το επώνυμο του μέλους ΔΕΠ/ΕΔΙΠ");
@@ -134,8 +137,10 @@ define ("_EDIT_MEMBER_FORM_PLACEHOLDER_FIRSTNAME", "Παρακαλώ εισάγ�
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_PHD", "Παρακαλώ εισάγετε το έτος κτήσης του διδακτορικού διπλώματος");
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_SCHOLAR", "Εισάγετε το ID του προφίλ του μέλους στο Google Scholar (π.χ., h-2JebwAAAAJ)");
 define ("_EDIT_MEMBER_FORM_PLACEHOLDER_SCOPUS", "Εισάγετε το ID του προφίλ του μέλους στο Scopus (π.χ., 7201792626)");
+define ("_EDIT_MEMBER_FORM_PLACEHOLDER_ORCID", "Εισάγετε το ID του προφίλ του μέλους στο ORCID (π.χ., 0000-0002-1825-0097)");
 define ("_EDIT_MEMBER_FORM_CHECK_SCHOLAR_PROFILE", "Δείτε το προφίλ του μέλους στο Scholar, πατώντας");
 define ("_EDIT_MEMBER_FORM_CHECK_SCOPUS_PROFILE", "Δείτε το προφίλ του μέλους στο Scopus, πατώντας");
+define ("_EDIT_MEMBER_FORM_CHECK_ORCID_PROFILE", "Δείτε το προφίλ του μέλους στο ORCID, πατώντας");
 define ("_EDIT_MEMBER_FORM_LABEL_VALID_DATA", "Τα στοιχεία είναι σωστά;");
 define ("_EDIT_MEMBER_FORM_LABEL_VALID_DATA_YES", "ΝΑΙ");
 define ("_EDIT_MEMBER_FORM_LABEL_VALID_DATA_NO", "ΟΧΙ / ΔΕΝ ΕΧΟΥΝ ΕΛΕΓΧΘΕΙ");

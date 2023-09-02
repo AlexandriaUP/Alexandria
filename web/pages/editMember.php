@@ -1,6 +1,7 @@
 <?php
 /* Session */
 session_start();
+require_once("../settings.php");
 require_once("components/login.php");
 require_once("components/language.php");
 require_once("../uppa_core/functions.php");
@@ -142,14 +143,38 @@ if (empty($facultyMember)) { header("Location: error.php?ec=gnr"); exit; }
                                        <div class="form-group">
                                           <label for="inpFacultyMemberScholarID"><?php echo _LABEL_SCHOLAR_ID; ?></label>
                                           <input type="text" class="form-control" id="inpFacultyMemberScholarID" placeholder="<?php echo _EDIT_MEMBER_FORM_PLACEHOLDER_SCHOLAR; ?>" value="<?php echo $facultyMember->scholar_id; ?>">
-                                          <span><small><?php echo _EDIT_MEMBER_FORM_CHECK_SCHOLAR_PROFILE; ?> <a id='linkScholarProfile' href="#" onclick="return false"><?php echo _LABEL_HERE; ?></a></small></span>
+                                          <?php if(!empty($facultyMember->scholar_id)) { ?>
+                                             <span><small><?php echo _EDIT_MEMBER_FORM_CHECK_SCHOLAR_PROFILE; ?> <a id='linkScholarProfile' href="#" onclick="return false"><?php echo _LABEL_HERE; ?></a></small></span>
+                                          <?php } ?>
                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                        <div class="form-group">
                                           <label for="inpFacultyMemberScopusID"><?php echo _LABEL_SCOPUS_ID; ?></label>
                                           <input type="text" class="form-control" id="inpFacultyMemberScopusID" placeholder="<?php echo _EDIT_MEMBER_FORM_PLACEHOLDER_SCOPUS; ?>" value="<?php echo $facultyMember->scopus_id; ?>">
-                                          <span><small><?php echo _EDIT_MEMBER_FORM_CHECK_SCOPUS_PROFILE; ?> <a id='linkScopusProfile' href="#" onclick="return false"><?php echo _LABEL_HERE; ?></a></small></span>
+                                          <?php if (!empty($facultyMember->scopus_id)) { ?>
+                                             <span><small><?php echo _EDIT_MEMBER_FORM_CHECK_SCOPUS_PROFILE; ?> <a id='linkScopusProfile' href="#" onclick="return false"><?php echo _LABEL_HERE; ?></a></small></span>
+                                          <?php } ?>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                       <div class="form-group">
+                                          <?php if ($_SESSION['role'] == 'admin') { ?>
+                                             <label for="inpFacultyMemberOrcidID"><?php echo _LABEL_ORCID_ID; ?></label>
+                                             <input type="text" class="form-control" id="inpFacultyMemberOrcidID" placeholder="<?php echo _EDIT_MEMBER_FORM_PLACEHOLDER_ORCID; ?>" value="<?php echo $facultyMember->orcid_id; ?>">
+                                             <?php if(!empty($facultyMember->orcid_id)) { ?>
+                                                <span><small><?php echo _EDIT_MEMBER_FORM_CHECK_ORCID_PROFILE; ?> <a id='linkOrcidProfile' href="#" onclick="return false"><?php echo _LABEL_HERE; ?></a></small></span>
+                                             <?php } ?>
+                                          <?php } else { ?>
+                                             <span><b><?php echo _LABEL_ORCID_ID; ?></b></span>
+                                             <?php if(!empty($facultyMember->orcid_id)) { ?>
+                                                <br/>
+                                                <img alt="orcid logo" src="https://orcid.org/sites/default/files/images/orcid_24x24.png"/>&nbsp;&nbsp;<a target="_orcidRecord" href="<?php echo $facultyMember->orcid_id;?>"><?php echo $facultyMember->orcid_id;?></a>
+                                             <?php } else { ?>
+                                                <script src="orcid-widget.js"></script>
+                                                <div id="orcidWidget" data-fmid='<?php echo $facultyMember->id; ?>' data-env='<?php echo _ORCID_API_ENV;?>' data-clientid='<?php echo _ORCID_API_CLIENT_ID; ?>' data-redirecturi='<?php echo curPageURL(); ?>' ></div>
+                                             <?php } ?>
+                                          <?php } ?>
                                        </div>
                                     </div>
                                     <div class="col-md-12">
@@ -212,6 +237,10 @@ if (empty($facultyMember)) { header("Location: error.php?ec=gnr"); exit; }
          	window.open("https://scholar.google.gr/citations?user="+$("#inpFacultyMemberScholarID").val());
          });
 
+         $( "#linkOrcidProfile" ).click(function() {
+         	window.open($("#inpFacultyMemberOrcidID").val());
+         });
+
          function areAllRequiredFieldsFilled(){
          	var areAllRequiredFIeldsFilled = true;
          	$( ".is-required" ).each(function( index ) {
@@ -235,6 +264,7 @@ if (empty($facultyMember)) { header("Location: error.php?ec=gnr"); exit; }
          					department_id: $("#selFacultyMemberDepartment").find(":selected").val(),
          					scholar_id: $("#inpFacultyMemberScholarID").val(),
          					scopus_id: $("#inpFacultyMemberScopusID").val(),
+                        orcid_id: $("#inpFacultyMemberOrcidID").val(),
          					phd_year: $("#inpFacultyMemberPhD").val(),
          					is_valid: $("#selValidData").find(":selected").val()
                 }

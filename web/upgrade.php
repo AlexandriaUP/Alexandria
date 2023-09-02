@@ -4,6 +4,7 @@ require_once('uppa_core/functions.php');
 
 $mysqli = createDatabaseConnection();
 
+/********* Εκτελείται μόνο σε περίπτωση αναβάθμισης από τη δοκιμαστική έκδοση 22.01 ******************/
 $sql = "CREATE TABLE `department_info` (
     `rid` int(11) NOT NULL AUTO_INCREMENT,
     `dptid` varchar(30) NOT NULL,
@@ -38,3 +39,12 @@ $mysqli->query($sql);
 
 $sql = "INSERT INTO `rank` (`rank_id`, `rank_full_title`, `rank_short_title`, `rank_order_id`) VALUES ('edip', 'ΕΔΙΠ', 'ΕΔΙΠ', 5)";
 $mysqli->query($sql);
+/**********************************************************************************************/
+
+/*********** Αναβάθμιση από την 1.0 στην 1.1 ή από την 22.01 στην 1.1 *************************/
+$sql = "ALTER TABLE `faculty_member` ADD COLUMN `orcid_id` VARCHAR(60) DEFAULT NULL";
+$mysqli->query($sql);
+
+$sql = "ALTER TABLE `publication_of_faculty_member_in_report` MODIFY `pub_title` VARCHAR(1000) DEFAULT NULL";
+$mysqli->query($sql);
+/**********************************************************************************************/

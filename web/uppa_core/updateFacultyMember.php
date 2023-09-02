@@ -31,8 +31,10 @@
     //users get the orcid id after authenticating
     if ($_SESSION['role'] == 'admin' && isset($facultyMember['orcid_id'])) {
       if (!empty($facultyMember['orcid_id'])) {
-        if (validate_orcid($facultyMember['orcid_id'])) {
+        if (_ORCID_API_ENV == 'production' && validate_orcid($facultyMember['orcid_id'])) {
           $orcid_sql = "`orcid_id`='".$facultyMember["orcid_id"]."',";
+        } elseif (_ORCID_API_ENV != 'production' && validate_orcid_sandbox($facultyMember['orcid_id'])) {
+
         } else { //wrong orcid id
           $orcid_error = true;
           $orcid_sql = '';

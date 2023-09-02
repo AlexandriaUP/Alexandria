@@ -12,8 +12,14 @@ if (!isset($_SESSION['role'])) {
     exit;
 } elseif ($_SESSION['role'] == 'fm' && $_REQUEST['fmid'] != $_SESSION['member_id']) {
     exit;
-} elseif (!validate_orcid($_REQUEST['orcidid'])) {
-    exit;
+} elseif (_ORCID_API_ENV == 'production') {
+    if(!validate_orcid($_REQUEST['orcidid'])) {
+        exit;
+    }
+} elseif (_ORCID_API_ENV != 'production') {
+    if(!validate_orcid_sandbox($_REQUEST['orcidid'])) {
+        exit;
+    }
 }
 
 $mysqli = createDatabaseConnection();

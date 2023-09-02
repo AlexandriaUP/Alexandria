@@ -1357,6 +1357,35 @@ function validate_orcid($orcidid) {
     return true;
 }
 
+function validate_orcid_sandbox($orcidid) {
+    if (strlen($orcidid) != 45) {
+        return false;
+    }
+    if (!str_starts_with($orcidid,'https://sandbox.orcid.org/')) {
+        return false;
+    }
+    if (substr($orcidid,30,1) != '-' || substr($orcidid,35,1) != '-' || substr($orcidid,40,1) != '-') {
+        return false;
+    }
+    if (!is_numeric(substr($orcidid,26,4)) || !is_numeric(substr($orcidid,31,4)) || !is_numeric(substr($orcidid,36,4)) || !is_numeric(substr($orcidid,41,3))) {
+        return false;
+    }
+
+    $baseDigits = substr($orcidid,26,4).substr($orcidid,31,4).substr($orcidid,36,4).substr($orcidid,41,3);
+    $total = 0;
+    foreach (str_split($baseDigits) as $char) {
+        $total = ($total + (int) $char) * 2;
+    }
+    $remainder = $total % 11;
+    $result = (12 - $remainder) % 11;
+    if ($result != 10 && (string) $result != substr($orcidid,44,1)) {
+        return false;
+    } elseif ($result == 10 && substr($orcidid,44,1) != 'X') { 
+        return false;
+    }
+    return true;
+}
+
 function curPageURL() {
 	$pageURL = 'http';
 	if(isset($_SERVER["HTTPS"]))

@@ -144,22 +144,52 @@ foreach ($publications as $p){
 $citations_per_publication_last_5_years = array();
 $h5_start_year = $current_year-5;
 $h5_end_year = $current_year-1;
+$j = 1;
+$pub_id_list = "";
 foreach ($publications as $p){
 	$pub_scopus_id = str_replace("SCOPUS_ID:", "", $p->pub_provider_id);		//Get scopus ID
-	$url ="https://api.elsevier.com/content/abstract/citations?scopus_id=$pub_scopus_id&apiKey=$api_key_citations&date=".$h5_start_year."-".$h5_end_year;
-	$resp = json_decode(executeCURL($url), true);
-	if ( isset($resp["abstract-citations-response"]) ){
-		$resp_entries = $resp["abstract-citations-response"]["citeColumnTotalXML"]["citeCountHeader"]["columnTotal"];
-		$citations_per_year[$current_year-5] += intval($resp_entries[0]["$"]);
-		$citations_per_year[$current_year-4] += intval($resp_entries[1]["$"]);
-		$citations_per_year[$current_year-3] += intval($resp_entries[2]["$"]);
-		$citations_per_year[$current_year-2] += intval($resp_entries[3]["$"]);
-		$citations_per_year[$current_year-1] += intval($resp_entries[4]["$"]);
+	$pub_id_list .= $pub_scopus_id.",";
 
-		$p->citations_5yrs = intval($resp_entries[0]["$"]) + intval($resp_entries[1]["$"]) + intval($resp_entries[2]["$"]) + intval($resp_entries[3]["$"]) + intval($resp_entries[4]["$"]);
-		array_push($citations_per_publication_last_5_years, intval($p->citations_5yrs));
+	if ($j % 20 == 0) {
+		$url ="https://api.elsevier.com/content/abstract/citations?scopus_id=".rtrim($pub_id_list,',')."&apiKey=$api_key_citations&date=".$h5_start_year."-".$h5_end_year;
+		$resp = json_decode(executeCURL($url), true);
+		if ( isset($resp['abstract-citations-response']) ){
+			foreach ($resp['abstract-citations-response']['citeInfoMatrix']['citeInfoMatrixXML']['citationMatrix']['citeInfo'] as $pub_citation_matrix) {
+				$citations_per_year[$current_year-5] += intval($pub_citation_matrix['cc'][0]['$']);
+				$citations_per_year[$current_year-4] += intval($pub_citation_matrix['cc'][1]['$']);
+				$citations_per_year[$current_year-3] += intval($pub_citation_matrix['cc'][2]['$']);
+				$citations_per_year[$current_year-2] += intval($pub_citation_matrix['cc'][3]['$']);
+				$citations_per_year[$current_year-1] += intval($pub_citation_matrix['cc'][4]['$']);
+
+				$pub_citations_5yrs = intval($pub_citation_matrix['cc'][0]['$']) + intval($pub_citation_matrix['cc'][1]['$']) + intval($pub_citation_matrix['cc'][2]['$']) +
+					intval($pub_citation_matrix['cc'][3]['$']) + intval($pub_citation_matrix['cc'][4]['$']);
+				array_push($citations_per_publication_last_5_years, $pub_citations_5yrs);
+			}
+		}
+		$pub_id_list = "";
 	}
+		
 	//usleep( 200 * 1000 );
+	$j++;
+}
+
+$j--;
+if ($j % 20 != 0) {
+	$url ="https://api.elsevier.com/content/abstract/citations?scopus_id=".rtrim($pub_id_list,',')."&apiKey=$api_key_citations&date=".$h5_start_year."-".$h5_end_year;
+	$resp = json_decode(executeCURL($url), true);
+	if ( isset($resp['abstract-citations-response']) ){
+		foreach ($resp['abstract-citations-response']['citeInfoMatrix']['citeInfoMatrixXML']['citationMatrix']['citeInfo'] as $pub_citation_matrix) {
+			$citations_per_year[$current_year-5] += intval($pub_citation_matrix['cc'][0]['$']);
+			$citations_per_year[$current_year-4] += intval($pub_citation_matrix['cc'][1]['$']);
+			$citations_per_year[$current_year-3] += intval($pub_citation_matrix['cc'][2]['$']);
+			$citations_per_year[$current_year-2] += intval($pub_citation_matrix['cc'][3]['$']);
+			$citations_per_year[$current_year-1] += intval($pub_citation_matrix['cc'][4]['$']);
+
+			$pub_citations_5yrs = intval($pub_citation_matrix['cc'][0]['$']) + intval($pub_citation_matrix['cc'][1]['$']) + intval($pub_citation_matrix['cc'][2]['$']) +
+				intval($pub_citation_matrix['cc'][3]['$']) + intval($pub_citation_matrix['cc'][4]['$']);
+			array_push($citations_per_publication_last_5_years, $pub_citations_5yrs);
+		}
+	}
 }
 
 /* Calculate citations last 5 years */

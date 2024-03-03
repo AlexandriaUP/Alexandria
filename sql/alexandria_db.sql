@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Εξυπηρετητής: 127.0.0.1:3306
--- Χρόνος δημιουργίας: 19 Δεκ 2022 στις 09:21:22
+-- Χρόνος δημιουργίας: 03 Μαρ 2024 στις 22:10:01
 -- Έκδοση διακομιστή: 5.7.31
 -- Έκδοση PHP: 8.1.13
 
@@ -233,6 +233,21 @@ CREATE TABLE IF NOT EXISTS `school` (
   `school_id` varchar(30) NOT NULL,
   `school_name` varchar(500) NOT NULL,
   PRIMARY KEY (`school_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Δομή πίνακα για τον πίνακα `scopus_api_requests_log`
+--
+DROP TABLE IF EXISTS `scopus_api_requests_log`;
+CREATE TABLE IF NOT EXISTS `scopus_api_requests_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(2000) DEFAULT NULL,
+  `http_response_status` varchar(100) NOT NULL,
+  `response_headers` text NOT NULL,
+  `request_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

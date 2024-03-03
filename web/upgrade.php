@@ -48,3 +48,15 @@ $mysqli->query($sql);
 $sql = "ALTER TABLE `publication_of_faculty_member_in_report` MODIFY `pub_title` VARCHAR(1000) DEFAULT NULL";
 $mysqli->query($sql);
 /**********************************************************************************************/
+
+/*********** Αναβάθμιση από προηγούμενες εκδόσεις στην 1.2 *************************/
+$sql = "CREATE TABLE IF NOT EXISTS `scopus_api_requests_log` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `url` varchar(2000) DEFAULT NULL,
+    `http_response_status` varchar(100) NOT NULL,
+    `response_headers` text NOT NULL,
+    `request_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+$mysqli->query($sql);
+/**********************************************************************************************/

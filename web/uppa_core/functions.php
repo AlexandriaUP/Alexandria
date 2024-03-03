@@ -1296,13 +1296,28 @@ function executeCURL($url){
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_URL, $url);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_HEADER, 1);
 	$headers = array("Accept: application/json",);
 	curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); //for debug only!
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //for debug only!
+
 	$resp = curl_exec($curl);
+
+	$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+	$header = substr($resp, 0, $header_size);
+	$body = substr($resp, $header_size);
+
+	$mysqli = createDatabaseConnection();
+	$stmt = $mysqli->prepare("INSERT INTO `scopus_api_requests_log` (`url`,`http_response_status`, `response_headers`) VALUES (?,?,?)");
+	$stmt->bind_param("sss", $url, $httpcode, $header);
+	$stmt->execute();
+	$mysqli -> close();
+
 	curl_close($curl);
-	return $resp;
+
+	return $body;
 }
 
 function getScimagoQforPublication($mysqli, $issn, $year, $eissn){

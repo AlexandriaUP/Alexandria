@@ -3,6 +3,9 @@
    require_once("classes/Message.php");
    require_once("functions.php");
 
+  /* Check access rights */
+  if ( !isset($_SESSION["role"]) || $_SESSION["role"] != "admin" ){ header("Location: ../pages/error.php?ec=ad"); exit; }
+
    /* Language config */
    $_SESSION['lang'] = "el";
    if(isset($_GET['lang']) && !empty($_GET['lang'])) $_SESSION['lang'] = $_GET['lang'];
@@ -10,12 +13,12 @@
    else require_once("language/lang.el.php");
    /* End of language config */
 
-   $facultyMember = $_POST["facultyMember"];
+   $facultyMember = isset($_POST["facultyMember"]) ? $_POST["facultyMember"] : null;
 
-  if (empty($facultyMember["id"]) || empty($facultyMember["last_name"]) || empty($facultyMember["first_name"]) || empty($facultyMember["rank_id"])
+  /*if (empty($facultyMember["id"]) || empty($facultyMember["last_name"]) || empty($facultyMember["first_name"]) || empty($facultyMember["rank_id"])
    || empty($facultyMember["department_id"]) || ($facultyMember["is_valid"] != 0 AND $facultyMember["is_valid"] != 1)) {
     $msg = new Message("error", _EDIT_MEMBER_FORM_UPDATE_INFO_ERROR);
-  } else if (!isset($_SESSION['role'])) {
+  } else */if (!isset($_SESSION['role'])) {
     $msg = new Message("error", _EDIT_MEMBER_FORM_UPDATE_INFO_ERROR);
   } else if ($_SESSION['role'] != 'admin' && ($_SESSION['role']) == 'fm' && $_SESSION['member_id'] != $facultyMember["id"]) {
     $msg = new Message("error", _EDIT_MEMBER_FORM_UPDATE_INFO_ERROR);
@@ -26,6 +29,8 @@
     if($facultyMember["phd_year"] == '') {
       $facultyMember["phd_year"] = 'NULL';
     }
+
+    $orcid_error = false;
 
     //only admin can change orcid id using a form
     //users get the orcid id after authenticating

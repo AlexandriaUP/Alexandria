@@ -9,7 +9,7 @@ require_once("../uppa_core/settings/year.php");
 set_time_limit(240);
 
 	/* Parameters */
-	$report_id = $_GET["rid"];
+	$report_id = isset($_GET["rid"]) ? intval($_GET["rid"]) : null;
 	if (empty($report_id) || !is_numeric($report_id)) { header("Location: error.php?ec=gnr"); exit; }
 	$type = "university_report";
 	if (isset($_GET['sid'])) $type = "school_report";
@@ -77,6 +77,9 @@ set_time_limit(240);
 	/* Create connection */
 	$mysqli = createDatabaseConnection();
 	$report = getReport($mysqli, $report_id);
+
+	if ( empty($report) ){ header("Location: error.php?ec=gnr"); exit; }
+
 	$report_year = intval(DateTime::createFromFormat("Y-m-d H:i:s", $report->datetimeCreated)->format("Y"));
 
 
@@ -127,10 +130,6 @@ set_time_limit(240);
 
 
 	$mysqli -> close();
-
-	if ( empty($report) ){ header("Location: error.php?ec=gnr"); exit; }
-
-
 
 	?>
 <!DOCTYPE html>

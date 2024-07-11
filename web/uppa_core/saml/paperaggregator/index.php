@@ -9,15 +9,11 @@ session_start();
 require_once dirname(__DIR__).'/_toolkit_loader.php';
 require_once dirname(__DIR__).'/extlib/xmlseclibs/xmlseclibs.php';
 require_once 'getUserDetails.php';
-
+//echo "<pre>"; print_r($settingsInfo); exit;
 $auth = new Auth($settingsInfo);
 
 if (isset($_GET['sso'])) {
     $auth->login();
-} else if (isset($_GET['sso2'])) {
-    $returnTo = $serverURL.'/pages/reports.php';
-    //echo $spBaseUrl;
-    $auth->login($returnTo);
 } else if (isset($_GET['slo'])) {
     $returnTo = null;
     $parameters = array();
@@ -113,27 +109,9 @@ if (isset($_SESSION['samlUserdata'])) {
     $username = strtoupper($username."".$emailExt);       // Convert username to USERNAME@ORG.GR (as in table `pa_user` of Alexandria db)
     fillUserData($username);
     header("location: $serverURL/pages/reports.php");
-
-    if (!empty($_SESSION['samlUserdata'])) {
-        $attributes = $_SESSION['samlUserdata'];
-        echo 'You have the following attributes:<br>';
-        echo '<table><thead><th>Name</th><th>Values</th></thead><tbody>';
-        foreach ($attributes as $attributeName => $attributeValues) {
-            echo '<tr><td>' . htmlentities($attributeName) . '</td><td><ul>';
-            foreach ($attributeValues as $attributeValue) {
-                echo '<li>' . htmlentities($attributeValue) . '</li>';
-            }
-            echo '</ul></td></tr>';
-        }
-        echo '</tbody></table>';
-    } else {
-        echo "<p>You don't have any attribute</p>";
-    }
-
-    echo '<p><a href="?slo" >Logout</a></p>';
 } else {
-    echo '<p><a href="?sso" >Login</a></p>';
-    echo '<p><a href="?sso2" >Login and access to attrs.php page</a></p>';
+    /*echo '<p><a href="?sso" >Login</a></p>';
+    echo '<p><a href="?sso2" >Login and access to attrs.php page</a></p>';*/
     header("location: $serverURL/pages/login.php");
 }
 

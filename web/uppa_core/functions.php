@@ -1401,6 +1401,80 @@ function validate_orcid_sandbox($orcidid) {
     return true;
 }
 
+function orcidCitations($orcid_id, $year) {
+	
+	$pub_type = array(
+		"book" => "Book",
+		"book-chapter" => "Book Chapter",
+		"journal-article" => "Journal Article",
+		"conference-abstract" => "Conference Abstract",
+		"conference-paper" => "Conference Paper",
+		"conference-poster" => "Conference Poster"
+	);
+	
+	$orcid_id_last_part = substr($orcid_id, 18);
+	
+	$api_works_url = 'https://pub.orcid.org/v3.0/'.$orcid_id_last_part.'/works';
+	
+	// Initializing curl
+	$ch = curl_init( $api_works_url );
+	
+	// Configuring curl options
+	$options = array(
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_HTTPHEADER => array("Content-type: application/json")
+	);
+	
+	// Setting curl options'
+	curl_setopt_array( $ch, $options );
+	
+	// Getting results
+	$result = curl_exec($ch); // Getting jSON result string
+	$data = json_decode($result, true);
+	if(isset($data['group'])) {
+	    $works = $data['group'];
+	} else {
+	    $works = array();
+	}
+	
+	$works_for_year = array();
+	
+	foreach($works as $work) {
+		if($work['work-summary'][0]['publication-date']['year']['value'] == $year) {
+			$works_for_year[] = 'https://pub.orcid.org/v3.0/'.$orcid_id_last_part.'/work/'.$work['work-summary'][0]['put-code'];
+		}
+	}
+	
+	$citations = array();
+
+	foreach ($works_for_year as $work_path) {
+		$ch = curl_init( $work_path );
+		curl_setopt_array( $ch, $options );
+		$work_result = curl_exec($ch);
+		$data_work = json_decode($work_result, true);
+		
+		$citation = "";
+		
+		foreach ($data_work['contributors']['contributor'] as $contributor) {
+			$citation .= $contributor['credit-name']['value'].", ";
+		}
+		$citation = substr($citation, 0, strlen($citation)-2) . ". (" . $data_work['publication-date']['year']['value'] . "). " . $data_work['title']['title']['value'] . 
+			".";
+	
+		if (array_key_exists($data_work['type'], $pub_type)) {
+			$citation .= " " . $pub_type[$data_work['type']] . ".";
+		}
+	
+		if (!empty($data_work['journal-title']['value'])) {
+			$citation .= " <i>" . $data_work['journal-title']['value'] . "</i>.";
+		}
+	
+		$citations[] = $citation;
+	}
+
+	return($citations);
+}
+
 function curPageURL() {
 	$pageURL = 'http';
 	if(isset($_SERVER["HTTPS"]))

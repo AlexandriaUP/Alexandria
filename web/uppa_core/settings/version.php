@@ -1,3 +1,3 @@
 <?php
-  define("_VERSION_NUMBER", "1.2.1");
+  define("_VERSION_NUMBER", "1.2.2");
 ?>

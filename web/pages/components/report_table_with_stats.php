@@ -532,6 +532,7 @@
   									</thead>
   									<tbody>
   										<?php
+										if (is_countable($metricsPerSubUnit) && sizeof($metricsPerSubUnit) > 0){
   										foreach ($metricsPerSubUnit as $mps){
   											if ( !empty($mps->publications)) {
   										?>
@@ -557,7 +558,7 @@
   											<td><?php echo round(getMedian($mps->publications_previous_year), 1); ?></td>
   											<td><?php echo round(getMedian($mps->citations_previous_year), 1); ?></td>
   										</tr>
-  										<?php } } ?>
+  										<?php } } }?>
   									</tbody>
   								</table>
                 </div><!-- /.tab-pane -->
@@ -608,6 +609,7 @@
   									</thead>
   									<tbody>
   										<?php
+										if (is_countable($metricsPerSubUnit) && sizeof($metricsPerSubUnit) > 0){
   										foreach ($metricsPerSubUnit as $mps){
   											if ( !empty($mps->publications)) {
   										?>
@@ -633,7 +635,7 @@
   											<td><?php echo round(getQ1Score($mps->publications_previous_year), 1); ?></td>
   											<td><?php echo round(getQ1Score($mps->citations_previous_year), 1); ?></td>
   										</tr>
-                    <?php } } ?>
+                    <?php } } }?>
   									</tbody>
   								</table>
                 </div><!-- /.tab-pane -->
@@ -684,6 +686,7 @@
   									</thead>
   									<tbody>
   										<?php
+										if (is_countable($metricsPerSubUnit) && sizeof($metricsPerSubUnit) > 0){
   										foreach ($metricsPerSubUnit as $mps){
   											if ( !empty($mps->publications)) {
   										?>
@@ -709,7 +712,7 @@
   											<td><?php echo round(getQ3Score($mps->publications_previous_year), 1); ?></td>
   											<td><?php echo round(getQ3Score($mps->citations_previous_year), 1); ?></td>
   										</tr>
-                      <?php } } ?>
+                      <?php } } } ?>
   									</tbody>
   								</table>
                 </div><!-- /.tab-pane -->
@@ -757,6 +760,7 @@
   									</thead>
   									<tbody>
   										<?php
+										if (is_countable($metricsPerSubUnit) && sizeof($metricsPerSubUnit) > 0){
   										foreach ($metricsPerSubUnit as $mps){
   											if ( !empty($mps->publications)) {
   										?>
@@ -778,7 +782,7 @@
   											<td><?php echo round(getTotal($mps->publications_previous_year), 1); ?></td>
   											<td><?php echo round(getTotal($mps->citations_previous_year), 1); ?></td>
   										</tr>
-                      <?php } } ?>
+                      <?php } } } ?>
   									</tbody>
   								</table>
                 </div><!-- /.tab-pane -->

@@ -27,6 +27,15 @@ $emailExt = ""; //e.g. @upatras.gr
 $spBaseUrl = ''; // e.g., 'https://alexandria.upatras.gr/uppa_core/saml/';
 $serverURL = ''; //e.g., https://alexandria.upatras.gr/
 $settingsInfo = array (
+    'strict' => true,
+    'security' => array (
+        'authnRequestsSigned' => true,
+        'wantMessagesSigned' => true,
+        'wantNameId' => true,
+        'wantXMLValidation' => true,
+        'signatureAlgorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
+        'digestAlgorithm' => 'http://www.w3.org/2001/04/xmlenc#sha256',
+    ),
     'sp' => array (
         'entityId' => '', // e.g., https://organization.gr/shibboleth
         'assertionConsumerService' => array (
@@ -36,6 +45,8 @@ $settingsInfo = array (
             'url' => '', // e.g., https://alexandria.upatras.gr/
         ),
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+        'x509cert' => '',
+        'privateKey' => ''
     ),
     'idp' => array (
         'entityId' => '', //e.g., https://idp.organization.gr/sidp/

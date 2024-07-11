@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (!isset($_SESSION["role"])) {
+   $_SESSION["role"] = 'guest';
+}
+
 require_once("components/language.php");
 require_once("../uppa_core/settings/components.php");
 ?>

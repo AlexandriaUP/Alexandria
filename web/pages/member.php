@@ -16,8 +16,8 @@ if ( !isset($_SESSION["role"]) || $_SESSION["role"] == "guest" ){ header("Locati
 
 
 
-	$report_id = $_GET["rid"];
-	$member_id = $_GET["fmid"];
+	$report_id = intval($_GET["rid"]);
+	$member_id = intval($_GET["fmid"]);
 
   /* Get the required data */
 	$mysqli = createDatabaseConnection();

@@ -3,7 +3,7 @@
 /**
  *  SAML Metadata view
  */
-
+/*
 require_once dirname(__DIR__).'/_toolkit_loader.php';
 
 require_once 'settings.php' ;
@@ -26,4 +26,4 @@ try {
     }
 } catch (Exception $e) {
     echo $e->getMessage();
-}
+}*/

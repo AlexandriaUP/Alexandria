@@ -3,7 +3,7 @@ if ( !isset($_SESSION['lang']) ){
   $_SESSION['lang'] = 'el';
 }
 
-if( isset($_GET['lang']) && !empty($_GET['lang']) ) {
+if( isset($_GET['lang']) && !empty($_GET['lang']) && ($_GET['lang']=='el' || $_GET['lang']=='en') ) {
   $_SESSION['lang'] = $_GET['lang'];
 }
 

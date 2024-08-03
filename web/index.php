@@ -10,7 +10,7 @@ require_once("uppa_core/settings/version.php");
 
 /* Language config */
 $_SESSION['lang'] = "el";
-if(isset($_GET['lang']) && !empty($_GET['lang'])) $_SESSION['lang'] = $_GET['lang'];
+if(isset($_GET['lang']) && !empty($_GET['lang']) && ($_GET['lang']=='el' || $_GET['lang']=='en')) $_SESSION['lang'] = $_GET['lang'];
 if ($_SESSION['lang'] == "en") require_once("uppa_core/language/lang.en.php");
 else require_once("uppa_core/language/lang.el.php");
 ?>

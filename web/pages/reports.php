@@ -147,6 +147,7 @@ $mysqli -> close();
                <?php if ($_SESSION["lang"] == "el"){ ?>
          	      language: { url: 'https://cdn.datatables.net/plug-ins/1.12.0/i18n/el.json' },
                <?php } ?>
+               "order": [[0, 'desc']],
                "responsive": true,
                "lengthChange": true,
                "autoWidth": false,

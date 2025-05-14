@@ -3,9 +3,6 @@
    require_once("classes/Message.php");
    require_once("functions.php");
 
-  /* Check access rights */
-  if ( !isset($_SESSION["role"]) || $_SESSION["role"] != "admin" ){ header("Location: ../pages/error.php?ec=ad"); exit; }
-
    /* Language config */
    $_SESSION['lang'] = "el";
    if(isset($_GET['lang']) && !empty($_GET['lang']) && ($_GET['lang']=='el' || $_GET['lang']=='en')) $_SESSION['lang'] = $_GET['lang'];

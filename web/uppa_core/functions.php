@@ -208,7 +208,7 @@ function getFacultyMemberInReport($mysqli, $member_id, $report_id, $provider_id)
 								 $jsonInfoMetadata->rank->order_id),
 				new Role($jsonInfoMetadata->role->id,
 								 $jsonInfoMetadata->role->name,
-								 $jsonInfoMetadata->role->order_id),
+								 $jsonInfoMetadata->role->orderId),
 				$jsonInfoMetadata->phd_year,
 				$jsonInfoMetadata->isValidated
 				);
@@ -273,7 +273,7 @@ function getFacultyMembersInReport($mysqli, $report_id, $role_id, $provider_id){
 								 $jsonInfoMetadata->rank->order_id),
 				new Role($jsonInfoMetadata->role->id,
 								 $jsonInfoMetadata->role->name,
-								 $jsonInfoMetadata->role->order_id),
+								 $jsonInfoMetadata->role->orderId),
 				$jsonInfoMetadata->phd_year,
 				$jsonInfoMetadata->isValidated
 				);

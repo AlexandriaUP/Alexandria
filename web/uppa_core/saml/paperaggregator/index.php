@@ -2,12 +2,12 @@
 /**
  *  SAML Handler
  */
-use OneLogin\Saml2\Auth;
+require __DIR__ . '/../../../vendor/autoload.php';
+
+ use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Utils;
 session_start();
 
-require_once dirname(__DIR__).'/_toolkit_loader.php';
-require_once dirname(__DIR__).'/extlib/xmlseclibs/xmlseclibs.php';
 require_once 'getUserDetails.php';
 //echo "<pre>"; print_r($settingsInfo); exit;
 $auth = new Auth($settingsInfo);

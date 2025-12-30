@@ -531,7 +531,7 @@ class MetricsList {
 
 class DepartmentProgress { public $department_id, $department_full_name, $total_faculty_members, $faculty_members_with_metrics; }
 class AggregateMetrics {
-	public $unit_id, $unit_name;
+	public $unit;
 	public $citations = array();
 	public $citations_5y = array();
 	public $publications = array();
@@ -1224,7 +1224,7 @@ function getMedian($arr) {
 	if($arrLength % 2 == 0){
 		$median = ($arr[$arrLength/2 - 1] + $arr[$arrLength/2])/2;
 	} else {
-		$median = $arr[($arrLength)/2];
+		$median = $arr[(int)($arrLength/2)];
 	}
 	return $median;
 }

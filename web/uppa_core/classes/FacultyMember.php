@@ -1,6 +1,6 @@
 <?php
 class FacultyMember {
-	public $id, $first_name, $last_name, $scholar_id, $scopus_id, $orcid_id, $department, $rank, $role, $phd_year, $isValidated;
+	public $id, $first_name, $last_name, $scholar_id, $scopus_id, $orcid_id, $department, $rank, $role, $phd_year, $isValidated, $info_metadata, $metrics_metadata, $author_profile;
 	function __construct($id, $first_name, $last_name, $scholar_id, $scopus_id, $orcid_id, $department, $rank, $role, $phd_year, $isValidated) {
 		$this->id = $id;
 		$this->first_name = $first_name;

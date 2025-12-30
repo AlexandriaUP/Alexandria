@@ -1,6 +1,6 @@
 <?php
 class Report{
-	public $id, $title, $datetimeCreated;
+	public $id, $title, $datetimeCreated, $progress;
 	function __construct($id, $title, $datetimeCreated) {
 		$this->id = $id;
 		$this->title = $title;

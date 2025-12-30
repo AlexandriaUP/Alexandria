@@ -1,2 +1,17 @@
+Options -Indexes
+
 RedirectMatch 404 ^/\.git
 RedirectMatch 404 ^/composer\.(json|lock|phar)$
+RedirectMatch 404 ^/vendor/
+
+<FilesMatch "(^\.env|settings\.php|config\.php)$">
+    Require all denied
+</FilesMatch>
+
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

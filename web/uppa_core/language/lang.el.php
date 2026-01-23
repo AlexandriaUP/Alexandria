@@ -32,6 +32,7 @@ if (!defined('_MENU_NEW_REPORT')) define("_MENU_NEW_REPORT", "Δημιουργί
 if (!defined('_MENU_MEMBERS')) define("_MENU_MEMBERS", "ΜΕΛΗ ΔΕΠ/ΕΔΙΠ");
 if (!defined('_MENU_VIEW_MEMBERS')) define("_MENU_VIEW_MEMBERS", "Προβολή μελών ΔΕΠ/ΕΔΙΠ");
 if (!defined('_MENU_VIEW_MY_PROFILE')) define("_MENU_VIEW_MY_PROFILE", "Διαχείριση του προφίλ μου");
+if (!defined('_MENU_VIEW_ORCID_DATA')) define("_MENU_VIEW_ORCID_DATA", "Δεδομένα ORCID");
 if (!defined('_MENU_LOGIN')) define("_MENU_LOGIN", "ΣΥΝΔΕΣΗ");
 if (!defined('_MENU_USER_LOGIN')) define("_MENU_USER_LOGIN", "Σύνδεση χρήστη");
 if (!defined('_MENU_LOGOUT')) define("_MENU_LOGOUT", "ΑΠΟΣΥΝΔΕΣΗ");
@@ -44,7 +45,7 @@ if (!defined('_MENU_CODE')) define("_MENU_CODE", "ΚΩΔΙΚΑΣ");
 if (!defined('_MENU_TUTORIAL')) define("_MENU_TUTORIAL", "Οδηγός χρήσης");
 if (!defined('_MENU_SOURCE_CODE')) define("_MENU_SOURCE_CODE", "Πηγαίος κώδικας");
 
-if (!defined('_FOOTER_COPYRIGHT')) define("_FOOTER_COPYRIGHT", "Copyright &copy; 2023 Πανεπιστήμιο Πατρών");
+if (!defined('_FOOTER_COPYRIGHT')) define("_FOOTER_COPYRIGHT", "Copyright &copy; ".date('Y')." Πανεπιστήμιο Πατρών");
 if (!defined('_FOOTER_EMAIL')) define("_FOOTER_EMAIL", "modipsecr@upatras.gr");
 if (!defined('_FOOTER_VERSION')) define("_FOOTER_VERSION", "Έκδοση");
 
@@ -176,6 +177,9 @@ define ("_TUTORIAL_HEADER", "Οδηγός Χρήσης");
 define ("_ERROR_HEADER", "Σφάλμα");
 define ("_ERROR_CODE_GENERIC", "Παρουσιάστηκε σφάλμα.");
 define ("_ERROR_CODE_ACCESS_DENIED", "Δεν έχετε δικαίωμα πρόβασης.");
+define ("_ERROR_CODE_NO_ORCID", "Δεν έχετε διασυνδεθεί με το ORCID. Μπορείτε να διασυνδεθείτε από την επιλογή διαχείρισης του προφίλ σας.");
+define ("_NO_ORCID_PUBS", "Δεν ανακτήθηκαν δημοσιεύσεις από το μητρώο ORCID.");
+define ("_SELECT", "Επιλογή");
 
 define("_SOURCE_CODE_TEXT", "Ο κώδικας του λογισμικού Αλεξάνδρεια είναι διαθέσιμος στο ");
 

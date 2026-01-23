@@ -32,7 +32,9 @@ function viewFacultyMembersCard($facultyMembers){
     $card .= "<th scope='col'>"._LABEL_SCOPUS_ID."</th>";
     $card .= "<th scope='col'>"._LABEL_ORCID_ID."</th>";
     $card .= "<th scope='col'>"._LABEL_VALIDATED_PROFILE."</th>";
-    $card .= "<th scope='col'>"._LABEL_ACTION."</th>";
+    if ($_SESSION['role'] == 'admin') {
+      $card .= "<th scope='col'>"._LABEL_ACTION."</th>";
+    }
     $card .= "</tr></thead><tbody>";
     foreach ($facultyMembers as $fm){
       $isValidated = "";
@@ -49,7 +51,9 @@ function viewFacultyMembersCard($facultyMembers){
         $card .= "<td></td>";
       }
       $card .= "<td class='td-validated'>".$isValidated."</td>";
-      $card .= "<td><a href='editMember.php?fmid=".$fm->id."'>"._LABEL_EDIT."</a></td>";
+      if ($_SESSION['role'] == 'admin') {
+        $card .= "<td><a href='editMember.php?fmid=".$fm->id."'>"._LABEL_EDIT."</a></td>";
+      }
       $card .= "</tr>";
     }
 

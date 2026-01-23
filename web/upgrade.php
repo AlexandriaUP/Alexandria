@@ -60,3 +60,8 @@ $sql = "CREATE TABLE IF NOT EXISTS `scopus_api_requests_log` (
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
 $mysqli->query($sql);
 /**********************************************************************************************/
+
+/*********** Αναβάθμιση από προηγούμενες εκδόσεις στην 1.2.7 *************************/
+$sql = "alter table pa_user add column viewDeptMembers varchar(30) default null, add constraint foreign key (viewDeptMembers) references department (dpt_id)";
+$mysqli->query($sql);
+/**********************************************************************************************/

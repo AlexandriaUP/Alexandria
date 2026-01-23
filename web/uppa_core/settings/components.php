@@ -3,6 +3,7 @@ require_once("version.php");
 
 $uppa_page_title = array(
 	"members" => _PAGE_MEMBERS,
+	"deptMembers" => _PAGE_MEMBERS,
 	"edit_member" => _PAGE_EDIT_MEMBER,
 	"new_report" => _PAGE_NEW_REPORT,
 	"update_report" => _PAGE_UPDATE_REPORT,
@@ -37,6 +38,8 @@ function getSideBarMenu($role, $pageKey){
 function getSideBarMenuItems($key){
 
 	$activeViewMembers = "";
+	$activeViewDeptMembers = "";
+	$activeViewORCID = "";
 	$activeViewReports = "";
 	$activeNewReport = "";
 	$activeSystemInfo = "";
@@ -45,6 +48,8 @@ function getSideBarMenuItems($key){
 	$activeSourceCode = "";
 
 	if ($key == "members") $activeViewMembers = "active";
+	else if ($key == "deptMembers") $activeViewDeptMembers = "active";
+	else if ($key == "ORCID") $activeViewORCID = "active";
 	else if ($key == "new_report") $activeNewReport = "active";
 	else if ($key == "view_reports") $activeViewReports = "active";
 	else if ($key == "tutorial") $activeTutorial = "active";
@@ -61,10 +66,14 @@ function getSideBarMenuItems($key){
 		$member_id = $_SESSION["member_id"];
 		$sidebar .= "<li class='nav-header'>"._MENU_MEMBERS."</li>";
 		$sidebar .= "<li class='nav-item'><a href='editMember.php?fmid=$member_id' class='nav-link $activeViewMembers'><i class='nav-icon fa fa-user'></i><p>"._MENU_VIEW_MY_PROFILE."</p></a></li>";
+		$sidebar .= "<li class='nav-item'><a href='orcidReport.php' class='nav-link $activeViewORCID'><i class='nav-icon fab fa-orcid'></i><p>"._MENU_VIEW_ORCID_DATA."</p></a></li>";
 	} else if ($_SESSION["role"] == "admin"){
 		$sidebar .= "<li class='nav-header'>ΜΕΛΗ ΔΕΠ</li>";
 		$sidebar .= "<li class='nav-item'><a href='members.php' class='nav-link $activeViewMembers'><i class='nav-icon fa fa-users'></i><p>"._MENU_VIEW_MEMBERS."</p></a></li>";
-
+	}
+	if (!is_null($_SESSION['viewDeptMembers'])) {
+		$sidebar .= "<li class='nav-header'>ΜΕΛΗ ΔΕΠ Τμήματος</li>";
+		$sidebar .= "<li class='nav-item'><a href='deptMembers.php' class='nav-link $activeViewDeptMembers'><i class='nav-icon fa fa-users'></i><p>"._MENU_VIEW_MEMBERS."</p></a></li>";
 	}
 //$sidebar .= "<li class='nav-header'>ΔΙΑΧΕΙΡΙΣΗ</li>";
 	//$sidebar .= "<li class='nav-item'><a href='#' class='nav-link $activeSystemInfo'><i class='nav-icon fas fa-info'></i><p>Πληροφορίες</p></a></li>";

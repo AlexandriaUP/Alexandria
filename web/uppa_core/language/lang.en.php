@@ -31,6 +31,7 @@ define("_MENU_NEW_REPORT", "Create new report");
 define("_MENU_MEMBERS", "MEMBERS");
 define("_MENU_VIEW_MEMBERS", "View members");
 define("_MENU_VIEW_MY_PROFILE", "Edit my profile");
+define("_MENU_VIEW_ORCID_DATA", "ORCID Data");
 define("_MENU_LOGIN", "LOGIN");
 define("_MENU_USER_LOGIN", "User login");
 define("_MENU_LOGOUT", "LOGOUT");
@@ -43,7 +44,7 @@ define("_MENU_CODE", "SOURCE CODE");
 define("_MENU_TUTORIAL", "Tutorial");
 if (!defined('_MENU_SOURCE_CODE')) define("_MENU_SOURCE_CODE", "Source code");
 
-define("_FOOTER_COPYRIGHT", "Copyright &copy; 2023 University of Patras");
+define("_FOOTER_COPYRIGHT", "Copyright &copy; ".date('Y')." University of Patras");
 define("_FOOTER_EMAIL", "modipsecr@upatras.gr");
 define("_FOOTER_VERSION", "Version");
 
@@ -172,6 +173,9 @@ define ("_TUTORIAL_HEADER", "Tutorial");
 define ("_ERROR_HEADER", "Error");
 define ("_ERROR_CODE_GENERIC", "There was a problem.");
 define ("_ERROR_CODE_ACCESS_DENIED", "You have no access rights for this request.");
+define ("_ERROR_CODE_NO_ORCID", "You have not connected to ORCID. You can connect from the profile management option.");
+define ("_NO_ORCID_PUBS", "ORCID registry returned no publications.");
+define ("_SELECT", "Select");
 
 define("_SOURCE_CODE_TEXT", "Alexandria's source code is available in ");
 ?>

@@ -11,7 +11,7 @@ require_once("../uppa_core/settings/components.php");
 if ( !isset($_GET['fmid']) ){ header("Location: error.php?ec=gnr"); exit; }
 
 /* Check access rights */
-if ($_SESSION["role"] == "fm"){ if ($_GET["fmid"] != $_SESSION["member_id"]){ header("Location: error.php?ec=ad"); exit; } }
+if ($_SESSION["role"] == "fm"){ if ($_GET["fmid"] != $_SESSION["member_id"]){ $_GET["fmid"] = $_SESSION["member_id"]; } }
 if ( !isset($_SESSION["role"]) || $_SESSION["role"] == "guest" ){ header("Location: error.php?ec=ad"); exit; }
 
 $facultyMemberID = $_GET["fmid"];

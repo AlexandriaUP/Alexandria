@@ -130,5 +130,6 @@ function fillUserData($username){
     $_SESSION['member_school'] = $jsonResult["dpt_school_id"];
     $_SESSION['member_dept'] = $jsonResult["department"];
     $_SESSION['member_id'] = $jsonResult["id"];
+    $_SESSION['viewDeptMembers'] = $jsonResult["viewDeptMembers"];
   }
 }

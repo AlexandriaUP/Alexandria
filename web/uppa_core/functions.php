@@ -117,10 +117,18 @@ function createNewReport($mysqli, $report_title){
 	@param: mysqli ($mysqli) - The connection with the Alexandria database
 	@return: array of FacultyMember ($facultyMembers) - An array with the matched faculty members
 **/
-function getFacultyMembers($mysqli){
+function getFacultyMembers($mysqli, $dept = null){
+
+	if (is_null($dept)) {
+		$dept_sql = '';
+	} else {
+		$dept_sql = "FM.department = '".$dept."' AND";
+	}
+
+
 	$sql = "SELECT `FM`.*, `DPT`.*, `DPT_INFO`.*, `RNK`.*, `SCH`.*, `ROLE`.*
 				  FROM `faculty_member` AS `FM`, `department` AS `DPT`, `department_info` AS `DPT_INFO`, `rank` AS `RNK`, `school` AS `SCH`, `role` AS `ROLE`
-					WHERE `FM`.`rank` = `RNK`.`rank_id` AND `FM`.`department` = `DPT`.`dpt_id` AND `DPT`.`dpt_id` = `DPT_INFO`.`dptid` AND `DPT_INFO`.`valid_until` IS NULL AND `DPT`.`dpt_school_id` = `SCH`.`school_id` AND `ROLE`.`role_id` = `FM`.`role` AND `FM`.`isActive` = 1
+					WHERE ".$dept_sql." `FM`.`rank` = `RNK`.`rank_id` AND `FM`.`department` = `DPT`.`dpt_id` AND `DPT`.`dpt_id` = `DPT_INFO`.`dptid` AND `DPT_INFO`.`valid_until` IS NULL AND `DPT`.`dpt_school_id` = `SCH`.`school_id` AND `ROLE`.`role_id` = `FM`.`role` AND `FM`.`isActive` = 1
 					ORDER BY `FM`.`last_name` ASC";
 	$facultyMembers = array();
 	if ($result = $mysqli -> query($sql)) {

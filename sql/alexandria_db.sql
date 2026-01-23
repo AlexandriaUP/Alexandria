@@ -108,7 +108,10 @@ CREATE TABLE IF NOT EXISTS `pa_user` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `role` varchar(10) NOT NULL,
-  `viewFacultyMemberID` int(11) DEFAULT NULL
+  `viewFacultyMemberID` int(11) DEFAULT NULL,
+  `viewDeptMembers` varchar(30) DEFAULT NULL,
+  KEY `viewDeptMembers` (`viewDeptMembers`),
+  CONSTRAINT `pa_user_ibfk_1` FOREIGN KEY (`viewDeptMembers`) REFERENCES `department` (`dpt_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

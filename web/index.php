@@ -64,7 +64,7 @@ else require_once("uppa_core/language/lang.el.php");
   <!-- Footer -->
   <footer class="main-footer fixed-bottom" style="margin:0px;">
     <div class='row'>
-      <div class='col-md-4'>Copyright &copy; 2021 <?php echo _UPAT;?><br><a href="mailto:modipsecr@upatras.gr">modipsecr@upatras.gr</a></div>
+    <div class='col-md-4'><?php echo _FOOTER_COPYRIGHT."<br><a href='mailto:"._FOOTER_EMAIL."'>"._FOOTER_EMAIL."</a>";?></div>
       <div class='col-md-4'><img alt="eu funding logo" src='dist/img/epanadvm_footer_2.jpg' width='100%'></div>
       <div class='colm-md-3 ml-auto'><?php echo _FOOTER_VERSION;?> <?php echo _VERSION_NUMBER; ?></div>
     </div>

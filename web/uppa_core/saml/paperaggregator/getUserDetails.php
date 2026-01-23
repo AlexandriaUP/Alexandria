@@ -15,6 +15,7 @@ function getUserDetails($username){
        $isVerified = true;
        $role = $row["role"];
        $viewMemberID = $row["viewFacultyMemberID"];
+       $viewDeptMembers = $row["viewDeptMembers"];
        break;
    }
 
@@ -22,6 +23,7 @@ function getUserDetails($username){
      $arrUser["loggedin"] = true;
      $arrUser["username"] = $username;
      $arrUser["role"] = $role;
+     $arrUser['viewDeptMembers'] = $viewDeptMembers;
 
      if ($role == "fm"){
        $stmt = $mysqli->prepare('SELECT * FROM `faculty_member`, `department` WHERE `id` = ? AND `department`.`dpt_id` = `faculty_member`.`department`');
